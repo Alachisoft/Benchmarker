@@ -1,8 +1,8 @@
-﻿using BechmarkingFramework.Benchmarkers;
-using BechmarkingFramework.Util;
+﻿using Benchmarker;
+using Benchmarker.Framework;
 using System;
 
-namespace BechmarkingFramework
+namespace Bechmarker
 {
     class Program
     {
@@ -10,30 +10,33 @@ namespace BechmarkingFramework
         {
             try
             {
-                var benchConfig = BenchmarkConfiguration.FromAppConfig();
-                Console.WriteLine("{0} Benchmarking application started.", benchConfig.Provider.ToString());
-
-                IBenchmarker benchmarking = GetBenchmarker(benchConfig);
-                benchmarking.StartBenchmarking();
+                // Get the instance of IBenchmarkableCache interface implemention
+                var benchmarkableCache = GetBenchmarableCache(BenchmarkConfiguration.ProviderFQN);
+                // Run the benchmarking 
+                var benchmarker = new Benchmarker.Benchmarker(benchmarkableCache);
+                benchmarker.Run(BenchmarkConfiguration.CacheName, BenchmarkConfiguration.NumberOfItems, BenchmarkConfiguration.NumberOfThreads, BenchmarkConfiguration.Payload, BenchmarkConfiguration.FetchRatio, BenchmarkConfiguration.UpdateRatio);
 
                 Console.WriteLine("Operations are being performed.");
-                //Console.WriteLine("Press ENTER to exit...");
             }
             catch (Exception exp)
             {
                 Console.WriteLine(exp);
                 Console.ReadLine();
             }
+            //Console.WriteLine("Press ENTER to exit...");
         }
 
-        private static IBenchmarker GetBenchmarker(BenchmarkConfiguration configuration)
+        private static IBenchmarkableCache GetBenchmarableCache(string fqn)
         {
-            switch (configuration.Provider)
-            {
-                case Provider.NCache:
-                default:
-                    return new NCacheBenchmarker(configuration);
-            }
+            // Get type using provided F.Q.N
+            var type = Type.GetType(fqn);
+
+            if(type == null)
+                throw new Exception("Unable to find the required class using provided FQN: " + fqn);
+
+            //Instantiate the provided implementation
+            return Activator.CreateInstance(Type.GetType(fqn)) as IBenchmarkableCache;
         }
+
     }
 }

@@ -1,31 +1,33 @@
-﻿using BechmarkingFramework.Util;
-using System;
+﻿using System;
 using System.Configuration;
 
-namespace BechmarkingFramework
+namespace Benchmarker
 {
     public class BenchmarkConfiguration
     {
-        public Provider Provider { get; internal set; }
-        public string cacheName { get; internal set; }
-        public int numberOfThreads { get; internal set; }
-        public int numberOfItems { get; internal set; }
-        public int updateRatio { get; internal set; }
-        public int fetchRatio { get; internal set; }
+        public static string ProviderFQN { get; internal set; }
+        public static string CacheName { get; internal set; }
+        public static int NumberOfThreads { get; internal set; }
+        public static long NumberOfItems { get; internal set; }
+        public static int FetchRatio { get; internal set; } = 80;
+        public static int UpdateRatio { get; internal set; } = 20;
+        public static int Payload { get; internal set; } = 100;
 
-        public static BenchmarkConfiguration FromAppConfig()
+        static BenchmarkConfiguration()
         {
-            var benchConfig = new BenchmarkConfiguration();
+            Load();
+        }
 
-            var providerVal = ConfigurationManager.AppSettings["Provider"];
-            benchConfig.Provider = (Provider)Enum.Parse(typeof(Provider), providerVal);
-            benchConfig.cacheName = ConfigurationManager.AppSettings["cache-name"];
-            benchConfig.numberOfThreads = Int32.Parse(ConfigurationManager.AppSettings["num-threads-per-application"]);
-            benchConfig.numberOfItems = Int32.Parse(ConfigurationManager.AppSettings["total-entries"]);
-            benchConfig.updateRatio = Int32.Parse(ConfigurationManager.AppSettings["put-ratio"]);
-            benchConfig.fetchRatio = Int32.Parse(ConfigurationManager.AppSettings["get-ratio"]);
-
-            return benchConfig;
+        private static void Load()
+        {
+            ProviderFQN = ConfigurationManager.AppSettings["provider-fqn"];
+            CacheName = ConfigurationManager.AppSettings["cache-name"];
+            NumberOfThreads = Int32.Parse(ConfigurationManager.AppSettings["num-threads-per-application"]);
+            NumberOfItems = long.Parse(ConfigurationManager.AppSettings["total-entries"]);
+            FetchRatio = Int32.Parse(ConfigurationManager.AppSettings["get-ratio"]);
+            UpdateRatio = Int32.Parse(ConfigurationManager.AppSettings["put-ratio"]);
+            if (ConfigurationManager.AppSettings["payload"] != null)
+                Payload = Int32.Parse(ConfigurationManager.AppSettings["payload"]);
         }
     }
 }

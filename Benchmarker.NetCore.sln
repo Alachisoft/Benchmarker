@@ -5,6 +5,10 @@ VisualStudioVersion = 15.0.27703.2026
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Benchmarker.NetCore", "Benchmarker\Benchmarker.NetCore.csproj", "{1B6D0EF1-7A91-4846-B25D-29D1C40BDC41}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Benchmarker.Framework", "Benchmarker.Framework\Benchmarker.Framework.csproj", "{ED61DB58-D536-420A-BBFC-56D2BCFC0D71}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Benchmarker.NCache", "Benchmarker.NCache\Benchmarker.NCache.csproj", "{7FE0FF2D-5A79-477E-B04E-0F4EB9EBD04B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,14 @@ Global
 		{1B6D0EF1-7A91-4846-B25D-29D1C40BDC41}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1B6D0EF1-7A91-4846-B25D-29D1C40BDC41}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1B6D0EF1-7A91-4846-B25D-29D1C40BDC41}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ED61DB58-D536-420A-BBFC-56D2BCFC0D71}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ED61DB58-D536-420A-BBFC-56D2BCFC0D71}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ED61DB58-D536-420A-BBFC-56D2BCFC0D71}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ED61DB58-D536-420A-BBFC-56D2BCFC0D71}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7FE0FF2D-5A79-477E-B04E-0F4EB9EBD04B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7FE0FF2D-5A79-477E-B04E-0F4EB9EBD04B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7FE0FF2D-5A79-477E-B04E-0F4EB9EBD04B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7FE0FF2D-5A79-477E-B04E-0F4EB9EBD04B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
