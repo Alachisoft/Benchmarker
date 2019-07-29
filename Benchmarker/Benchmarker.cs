@@ -25,21 +25,22 @@ namespace Benchmarker
 
             var itemsPerThread = numberOfItems / numberOfThreads;
             
-            long lowerIndex = 0;
-            long upperIndex = itemsPerThread - 1;
             Thread[] threads = new Thread[numberOfThreads];
-
             for (int i = 0; i < numberOfThreads; i++)
             {
+                var lowerIndex = i * itemsPerThread;
+                var upperIndex = ((i + 1) * itemsPerThread);
+
                 threads[i] = new Thread(() => { AddToCache(lowerIndex, upperIndex, payLoad); });
-                threads[i].Start();
-
-                Thread.Sleep(200);
-
-                lowerIndex = upperIndex;
-                upperIndex = itemsPerThread + upperIndex;
+                threads[i].Name = "Thread_" + i;
             }
 
+            // Start all threads 
+            foreach (var thread in threads)
+            {
+                thread.Start();
+            }
+            //--- Wait for all threads to complete their tasks 
             foreach(Thread thread in threads)
             {
                 thread.Join();
@@ -92,11 +93,13 @@ namespace Benchmarker
 
         private void AddToCache(long lowerIndex, long upperIndex, int payLoad)
         {
+            Console.WriteLine(Thread.CurrentThread.Name + " - LowerIndex: " + lowerIndex + ", UpperIndex: " + upperIndex);
             var keyGenerator = new KeyGenerator();
             
-            for (long i = lowerIndex; i <= upperIndex; i++)
+            for (long i = lowerIndex; i < upperIndex; i++)
             {
                 var key = keyGenerator.Generate(i);
+
                 _cache.Update(key, GetPayload(payLoad));
             }
         }
