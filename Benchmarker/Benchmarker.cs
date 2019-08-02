@@ -93,7 +93,6 @@ namespace Benchmarker
 
         private void AddToCache(long lowerIndex, long upperIndex, int payLoad)
         {
-            Console.WriteLine(Thread.CurrentThread.Name + " - LowerIndex: " + lowerIndex + ", UpperIndex: " + upperIndex);
             var keyGenerator = new KeyGenerator();
             
             for (long i = lowerIndex; i < upperIndex; i++)
